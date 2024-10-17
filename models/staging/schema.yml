@@ -29,3 +29,27 @@ models:
         tests:
           - accepted_values:
               values: ['credit_card', 'coupon', 'bank_transfer', 'gift_card']
+
+  - name: orders_summary
+    description: "Aggregates customer order data, providing total orders, total amount, and average order value per customer."
+    columns:
+      - name: customer_id
+        description: "The unique identifier of a customer, referencing stg_customers."
+        tests:
+          - unique
+          - not_null
+          - relationships:
+              to: ref('stg_customers')
+              field: customer_id
+      - name: total_orders
+        description: "Total number of orders placed by the customer."
+        tests:
+          - not_null
+      - name: total_amount
+        description: "Total monetary value of all orders made by the customer."
+        tests:
+          - not_null
+      - name: avg_order_value
+        description: "Average value of a customer's orders, calculated as total_amount divided by total_orders."
+        tests:
+          - not_null
